@@ -1,0 +1,78 @@
+{
+  "name": "vtc-local",
+  "version": "1.0.0",
+  "description": "Application VTC complète pour tricycles et voitures en Côte d'Ivoire avec IA intégrée",
+  "author": {
+    "name": "MonAP & Claude Team",
+    "email": "contact@vtclocal.ci"
+  },
+  "license": "MIT",
+  "keywords": [
+    "vtc",
+    "transport",
+    "côte-d-ivoire",
+    "tricycle",
+    "voiture",
+    "react-native",
+    "nodejs",
+    "geolocation",
+    "ai"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Pacousstar/vtc-local.git"
+  },
+  "homepage": "https://vtclocal.ci",
+  "scripts": {
+    "install-all": "npm install && cd mobile-app && npm install && cd ../backend && npm install && cd ../admin-panel && npm install",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:admin\" \"npm run dev:mobile\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:admin": "cd admin-panel && npm run dev",
+    "dev:mobile": "cd mobile-app && npm start",
+    "build": "npm run build:backend && npm run build:admin",
+    "build:backend": "cd backend && npm run build",
+    "build:admin": "cd admin-panel && npm run build",
+    "test": "npm run test:backend && npm run test:mobile",
+    "test:backend": "cd backend && npm test",
+    "test:mobile": "cd mobile-app && npm test",
+    "deploy:backend": "cd backend && npm run deploy",
+    "deploy:admin": "cd admin-panel && vercel --prod",
+    "clean": "Remove-Item -Recurse -Force node_modules, mobile-app/node_modules, backend/node_modules, admin-panel/node_modules -ErrorAction SilentlyContinue",
+    "setup": "npm run install-all && npm run setup:env",
+    "setup:env": "Copy-Item .env.example .env && Copy-Item backend/.env.example backend/.env"
+  },
+  "workspaces": [
+    "mobile-app",
+    "backend",
+    "admin-panel",
+    "shared"
+  ],
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
+    "eslint": "^8.44.0",
+    "prettier": "^3.0.0",
+    "@compodoc/compodoc": "^1.1.21"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  },
+  "private": true
+}
